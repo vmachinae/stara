@@ -16,7 +16,7 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 9/14/2020, 5/20/2021
+///   Date: 9/14/2020, 9/24/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef VOS_APP_CONSOLE_XTTP_SERVER_MAIN_HPP
 #define VOS_APP_CONSOLE_XTTP_SERVER_MAIN_HPP
@@ -142,14 +142,23 @@ protected:
     virtual int process_response_to(writer_t& writer, response_t& response, request_t& request, reader_t& reader, int argc, char_t** argv, char** env) {
         int err = 0;
         switch (request.line().method().which()) {
+
         case vos::protocol::http::request::method::restart:
+            LOGGER_IS_LOGGED_DEBUG("all_process_response_to_restart(...)...");
             err = all_process_response_to_restart(writer, response, request, reader, argc, argv, env);
+            LOGGER_IS_LOGGED_DEBUG("..." << err << " = all_process_response_to_restart(...)");
             break;
+        
         case vos::protocol::http::request::method::stop:
+            LOGGER_IS_LOGGED_DEBUG("all_process_response_to_stop(...)...");
             err = all_process_response_to_stop(writer, response, request, reader, argc, argv, env);
+            LOGGER_IS_LOGGED_DEBUG("..." << err << " = all_process_response_to_stop(...)");
             break;
+        
         default:
+            LOGGER_IS_LOGGED_DEBUG("all_process_response_to_unknown(...)...");
             err = all_process_response_to_unknown(writer, response, request, reader, argc, argv, env);
+            LOGGER_IS_LOGGED_DEBUG("..." << err << " = all_process_response_to_unknown(...)");
             break;
         } /// switch
         return err;
@@ -173,6 +182,8 @@ protected:
         }
         return err;
     }
+
+    /// ...process_response_to_restart...
     virtual int process_response_to_restart(writer_t& writer, response_t& response, request_t& request, reader_t& reader, int argc, char_t** argv, char** env) {
         int err = 0;
         return err;
@@ -197,6 +208,8 @@ protected:
         }
         return err;
     }
+
+    /// ...process_response_to_stop...
     virtual int process_response_to_stop(writer_t& writer, response_t& response, request_t& request, reader_t& reader, int argc, char_t** argv, char** env) {
         int err = 0;
         return err;
@@ -221,6 +234,8 @@ protected:
         }
         return err;
     }
+
+    /// ...process_response_to_unknown...
     virtual int process_response_to_unknown(writer_t& writer, response_t& response, request_t& request, reader_t& reader, int argc, char_t** argv, char** env) {
         int err = 0;
         return err;

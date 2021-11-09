@@ -16,7 +16,7 @@
 ///   File: main_opt.hpp
 ///
 /// Author: $author$
-///   Date: 9/10/2020, 4/29/2021
+///   Date: 9/10/2020, 9/22/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef VOS_APP_CONSOLE_PROTOCOL_XTTP_BASE_MAIN_OPT_HPP
 #define VOS_APP_CONSOLE_PROTOCOL_XTTP_BASE_MAIN_OPT_HPP
@@ -30,19 +30,6 @@
 #define VOS_APP_CONSOLE_PROTOCOL_Xttp "Xttp"
 #define VOS_APP_CONSOLE_PROTOCOL_xttp "xttp"
 #endif /// defined(VOS_APP_CONSOLE_PROTOCOL_HTTP_MAIN_OPT_HPP)
-
-/*#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPT "content-of-message"
-#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTARG_REQUIRED MAIN_OPT_ARGUMENT_NONE
-#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTARG_RESULT 0
-#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTARG ""
-#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTUSE "Xttp content of message"
-#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTVAL_S "e"
-#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTVAL_C 'e'
-#define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTION \
-   {VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPT, \
-    VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTARG_REQUIRED, \
-    VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTARG_RESULT, \
-    VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTVAL_C}, \*/
 
 #define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPT "content"
 #define VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTARG_REQUIRED MAIN_OPT_ARGUMENT_OPTIONAL
@@ -71,13 +58,11 @@
     VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_TYPE_OPTVAL_C}, \
 
 #define VOS_PROTOCOL_XTTP_BASE_MAIN_OPTIONS_CHARS_EXTEND \
-   /*VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTVAL_S \
-   */VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTVAL_S \
+   VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTVAL_S \
    VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_TYPE_OPTVAL_S \
 
 #define VOS_PROTOCOL_XTTP_BASE_MAIN_OPTIONS_OPTIONS_EXTEND \
-   /*VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTION \
-   */VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTION \
+   VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTION \
    VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_TYPE_OPTION \
 
 #define VOS_PROTOCOL_XTTP_BASE_MAIN_OPTIONS_CHARS \
@@ -342,11 +327,6 @@ protected:
         }
         return err;
     }
-    /*virtual const char_t* content_of_message_option_usage(const char_t*& optarg, const struct option* longopt) {
-        optarg = VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTARG;
-        const char_t* chars = VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTUSE;
-        return chars;
-    }*/
     virtual const char_t* content_option_usage(const char_t*& optarg, const struct option* longopt) {
         optarg = VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTARG;
         const char_t* chars = VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTUSE;
@@ -360,9 +340,6 @@ protected:
     virtual const char_t* option_usage(const char_t*& optarg, const struct option* longopt) {
         const char_t* chars = "";
         switch(longopt->val) {
-/*        case VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OF_MESSAGE_OPTVAL_C:
-            chars = content_of_message_option_usage(optarg, longopt);
-            break;*/
         case VOS_PROTOCOL_XTTP_BASE_MAIN_CONTENT_OPTVAL_C:
             chars = content_option_usage(optarg, longopt);
             break;
