@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2021 $organization$
+/// Copyright (c) 1988-2020 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,36 +13,21 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: node_type.cpp
 ///
 /// Author: $author$
-///   Date: 8/4/2021, 11/12/2021
+///   Date: 7/7/2020
 ///////////////////////////////////////////////////////////////////////
-#include "xos/app/console/stara/version/main.hpp"
-
-#if defined(XOS_CONSOLE_MAIN_MAIN)
-#if !defined(XOS_APP_CONSOLE_STARA_VERSION_MAIN_INSTANCE)
-#define XOS_APP_CONSOLE_STARA_VERSION_MAIN_INSTANCE
-#endif /// !defined(XOS_APP_CONSOLE_STARA_VERSION_MAIN_NSTANCE)
-#endif /// defined(XOS_CONSOLE_MAIN_MAIN)
-
-#if defined(XOS_APP_CONSOLE_STARA_VERSION_MAIN_INSTANCE)
-#include "xos/console/main_main.cpp"
-#endif /// defined(XOS_APP_CONSOLE_STARA_VERSION_MAIN_INSTANCE)
+#include "xos/protocol/xttp/content/json/node_type.hpp"
 
 namespace xos {
-namespace app {
-namespace console {
-namespace stara {
-namespace version {
+namespace protocol {
+namespace xttp {
+namespace content {
+namespace json {
 
-/// class main
-#if defined(XOS_APP_CONSOLE_STARA_VERSION_MAIN_INSTANCE)
-static main the_main;
-#endif /// defined(XOS_APP_CONSOLE_STARA_VERSION_MAIN_INSTANCE)
-
-} /// namespace version
-} /// namespace stara
-} /// namespace console
-} /// namespace app
+} /// namespace json
+} /// namespace content
+} /// namespace xttp
+} /// namespace protocol
 } /// namespace xos

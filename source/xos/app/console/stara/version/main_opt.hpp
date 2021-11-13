@@ -16,7 +16,7 @@
 ///   File: main_opt.hpp
 ///
 /// Author: $author$
-///   Date: 8/4/2021
+///   Date: 8/4/2021, 11/12/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef XOS_APP_CONSOLE_STARA_VERSION_MAIN_OPT_HPP
 #define XOS_APP_CONSOLE_STARA_VERSION_MAIN_OPT_HPP
@@ -50,7 +50,7 @@ public:
     typedef typename extends::file_t file_t;
 
     /// constructor / destructor
-    main_optt() {
+    main_optt(): run_(0) {
     }
     virtual ~main_optt() {
     }
@@ -63,6 +63,18 @@ protected:
     typedef typename extends::in_reader_t in_reader_t;
     typedef typename extends::out_writer_t out_writer_t;
     typedef typename extends::err_writer_t err_writer_t;
+
+    /// ...run
+    int (derives::*run_)(int argc, char_t** argv, char_t** env);
+    virtual int run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if ((run_)) {
+            err = (this->*run_)(argc, argv, env);
+        } else {
+            err = extends::run(argc, argv, env);
+        }
+        return err;
+    }
 
 protected:
 }; /// class main_optt
