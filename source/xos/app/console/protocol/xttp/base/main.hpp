@@ -182,6 +182,34 @@ protected:
     virtual content_type_t& content_type_javascript() const {
         return (content_type_t&)javascript_;
     }
+    virtual content_type_t& set_content_type_text() {
+        const content_type_t& content_type = this->content_type_text();
+        return set_content_type(content_type);
+    }
+    virtual content_type_t& set_content_type_html() {
+        const content_type_t& content_type = this->content_type_html();
+        return set_content_type(content_type);
+    }
+    virtual content_type_t& set_content_type_xml() {
+        const content_type_t& content_type = this->content_type_xml();
+        return set_content_type(content_type);
+    }
+    virtual content_type_t& set_content_type_css() {
+        const content_type_t& content_type = this->content_type_css();
+        return set_content_type(content_type);
+    }
+    virtual content_type_t& set_content_type_json() {
+        const content_type_t& content_type = this->content_type_json();
+        return set_content_type(content_type);
+    }
+    virtual content_type_t& set_content_type_javascript() {
+        const content_type_t& content_type = this->content_type_javascript();
+        return set_content_type(content_type);
+    }
+    virtual content_type_t& set_content_type(const content_type_t& to) {
+        const char_t* to_chars = to.chars();
+        return set_content_type(to_chars);
+    }
     virtual content_type_t& set_content_type(const char_t* to) {
         content_type_t& content_type = this->content_type();
         content_type_header_t& content_type_header = this->content_type_header();
@@ -202,6 +230,10 @@ protected:
     }
 
     /// content
+    virtual content_t& set_content(const content_t& to) {
+        const char_t* to_chars = to.chars();
+        return set_content(to_chars);
+    }
     virtual content_t& set_content(const char_t* to) {
         content_length_header_t& content_length_header = this->content_length_header();
         content_t& content = this->content();

@@ -35,7 +35,7 @@ namespace client {
 
 /// class maint
 template 
-<class TExtends = main_opt, 
+<class TExtends = xos::app::console::network::sockets::protocol::xttp::client::main_optt<>, 
  class TImplements = typename TExtends::implements>
 
 class exported maint: virtual public TImplements, public TExtends {
