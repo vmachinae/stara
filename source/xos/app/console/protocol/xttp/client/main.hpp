@@ -296,6 +296,10 @@ protected:
     virtual request_method_t& request_method() const {
         return (request_method_t&)method_;
     }
+    virtual request_resource_t& set_request_resource(const string_t& to) {
+        const char_t* to_chars = to.chars();
+        return set_request_resource(to_chars);
+    }
     virtual request_resource_t& set_request_resource(const char_t* to) {
         request_resource_t& resource = this->request_resource();
         request_line_t& line = this->request_line();
