@@ -1142,6 +1142,10 @@ protected:
         }
         return content_type_;
     }
+    virtual content_type_header_t* set_content_type_from_context() {
+        set_content_type_from_configure();
+        return content_type_;
+    }
     virtual content_type_header_t* set_content_type_from_parameter() {
         return set_content_type_from_parameter(content_type_parameter_name_);
     }
@@ -1150,7 +1154,7 @@ protected:
         if ((chars = get_parameter(parameter_name))) {
             set_content_type(chars);
         } else {
-            set_content_type_from_configure();
+            set_content_type_from_context();
         }
         return content_type_;
     }

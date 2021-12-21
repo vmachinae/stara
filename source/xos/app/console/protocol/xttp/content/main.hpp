@@ -16,24 +16,25 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 12/17/2021
+///   Date: 12/21/2021
 ///////////////////////////////////////////////////////////////////////
-#ifndef XOS_APP_CONSOLE_PROTOCOL_HTTP_BASE_MAIN_HPP
-#define XOS_APP_CONSOLE_PROTOCOL_HTTP_BASE_MAIN_HPP
+#ifndef XOS_APP_CONSOLE_PROTOCOL_XTTP_CONTENT_MAIN_HPP
+#define XOS_APP_CONSOLE_PROTOCOL_XTTP_CONTENT_MAIN_HPP
 
-#include "xos/app/console/protocol/http/base/main_opt.hpp"
+#include "xos/app/console/protocol/xttp/content/main_opt.hpp"
+#include "xos/protocol/http/message/body/content.hpp"
 
 namespace xos {
 namespace app {
 namespace console {
 namespace protocol {
-namespace http {
-namespace base {
+namespace xttp {
+namespace content {
 
 /// class maint
 template 
-<class TExtends = xos::app::console::protocol::http::base::main_optt<>, 
- class TImplements = typename TExtends::implements>
+<class TExtends = xos::app::console::protocol::xttp::content::main_optt<>, 
+class TImplements = typename TExtends::implements>
 
 class exported maint: virtual public TImplements, public TExtends {
 public:
@@ -50,7 +51,7 @@ public:
     typedef typename extends::file_t file_t;
 
     /// constructor / destructor
-    maint(): run_(0) {
+    maint() {
     }
     virtual ~maint() {
     }
@@ -64,29 +65,32 @@ protected:
     typedef typename extends::out_writer_t out_writer_t;
     typedef typename extends::err_writer_t err_writer_t;
 
-    typedef typename extends::content_t content_t;
+    typedef xos::protocol::http::message::body::content content_t;
 
-    /// ...run
-    int (derives::*run_)(int argc, char_t** argv, char_t** env);
-    virtual int run(int argc, char_t** argv, char_t** env) {
-        int err = 0;
-        if ((run_)) {
-            err = (this->*run_)(argc, argv, env);
-        } else {
-            err = extends::run(argc, argv, env);
-        }
-        return err;
+    /// content
+    virtual content_t& set_content(const content_t& to) {
+        const char_t* to_chars = to.chars();
+        return set_content(to_chars);
+    }
+    virtual content_t& set_content(const char_t* to) {
+        content_t& content = this->content();
+        content.set(to);
+        return content;
+    }
+    virtual content_t& content() const {
+        return (content_t&)content_;
     }
 
 protected:
+    xos::protocol::http::message::body::content content_;
 }; /// class maint
 typedef maint<> main;
 
-} /// namespace base
-} /// namespace http
+} /// namespace content
+} /// namespace xttp
 } /// namespace protocol
 } /// namespace console
 } /// namespace app
 } /// namespace xos
 
-#endif /// ndef XOS_APP_CONSOLE_PROTOCOL_HTTP_BASE_MAIN_HPP
+#endif /// ndef XOS_APP_CONSOLE_PROTOCOL_XTTP_CONTENT_MAIN_HPP

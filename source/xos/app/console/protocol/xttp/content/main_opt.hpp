@@ -13,33 +13,33 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.hpp
+///   File: main_opt.hpp
 ///
 /// Author: $author$
-///   Date: 12/17/2021
+///   Date: 12/21/2021
 ///////////////////////////////////////////////////////////////////////
-#ifndef XOS_APP_CONSOLE_PROTOCOL_HTTP_BASE_MAIN_HPP
-#define XOS_APP_CONSOLE_PROTOCOL_HTTP_BASE_MAIN_HPP
+#ifndef XOS_APP_CONSOLE_PROTOCOL_XTTP_CONTENT_MAIN_OPT_HPP
+#define XOS_APP_CONSOLE_PROTOCOL_XTTP_CONTENT_MAIN_OPT_HPP
 
-#include "xos/app/console/protocol/http/base/main_opt.hpp"
+#include "xos/app/console/main.hpp"
 
 namespace xos {
 namespace app {
 namespace console {
 namespace protocol {
-namespace http {
-namespace base {
+namespace xttp {
+namespace content {
 
-/// class maint
+/// class main_optt
 template 
-<class TExtends = xos::app::console::protocol::http::base::main_optt<>, 
- class TImplements = typename TExtends::implements>
+<class TExtends = xos::app::console::maint<>, 
+class TImplements = typename TExtends::implements>
 
-class exported maint: virtual public TImplements, public TExtends {
+class exported main_optt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements implements;
     typedef TExtends extends;
-    typedef maint derives;
+    typedef main_optt derives;
 
     typedef typename extends::char_t char_t;
     typedef typename extends::end_char_t end_char_t;
@@ -50,12 +50,12 @@ public:
     typedef typename extends::file_t file_t;
 
     /// constructor / destructor
-    maint(): run_(0) {
+    main_optt() {
     }
-    virtual ~maint() {
+    virtual ~main_optt() {
     }
 private:
-    maint(const maint& copy) {
+    main_optt(const main_optt& copy) {
         throw exception(exception_unexpected);
     }
 
@@ -64,29 +64,15 @@ protected:
     typedef typename extends::out_writer_t out_writer_t;
     typedef typename extends::err_writer_t err_writer_t;
 
-    typedef typename extends::content_t content_t;
-
-    /// ...run
-    int (derives::*run_)(int argc, char_t** argv, char_t** env);
-    virtual int run(int argc, char_t** argv, char_t** env) {
-        int err = 0;
-        if ((run_)) {
-            err = (this->*run_)(argc, argv, env);
-        } else {
-            err = extends::run(argc, argv, env);
-        }
-        return err;
-    }
-
 protected:
-}; /// class maint
-typedef maint<> main;
+}; /// class main_optt
+typedef main_optt<> main_opt;
 
-} /// namespace base
-} /// namespace http
+} /// namespace content
+} /// namespace xttp
 } /// namespace protocol
 } /// namespace console
 } /// namespace app
 } /// namespace xos
 
-#endif /// ndef XOS_APP_CONSOLE_PROTOCOL_HTTP_BASE_MAIN_HPP
+#endif /// ndef XOS_APP_CONSOLE_PROTOCOL_XTTP_CONTENT_MAIN_OPT_HPP
