@@ -63,10 +63,12 @@ public:
     /// constructor / destructor
     maint()
     : run_(0), in_std_in_(0), out_std_out_(0),
+      content_type_js_(0), content_type_json_(0), 
       out_content_type_(0), content_type_(0), 
       content_type_text_("text/plain"), content_type_html_("text/html"), 
       content_type_xml_("text/xml"), content_type_css_("text/css"), 
-      content_type_js_("application/javascript"), content_type_json_("application/json"), content_type_parameter_name_("content_type"),
+      content_type_text_js_("text/javascript"), content_type_text_json_("text/json"), 
+      content_type_application_js_("application/javascript"), content_type_application_json_("application/json"), content_type_parameter_name_("content_type"),
       configure_name_("configure"), configure_file_name_("cgicatch-conf.txt"), configure_file_pattern_("configure\r\n"),
       environment_name_("environment"), environment_file_name_("cgicatch-env.txt"), environment_file_pattern_("environment\r\n"),
       input_name_("stdin"), input_file_name_("cgicatch-stdin.txt"), input_file_pattern_("stdin\r\n"),
@@ -1160,6 +1162,17 @@ protected:
     }
     virtual content_type_header_t* set_content_type(const char_t* chars) {
         if ((chars) && (chars[0])) {
+            if (!(get_content_type_of(chars))) {
+                if ((content_type_ = content_type_other())) {
+                    content_type_->set_value(chars);
+                }
+            }
+        }
+        return content_type_;
+    }
+    virtual content_type_header_t* get_content_type_of(const char_t* chars) const {
+        content_type_header_t* content_type_ = 0;
+        if ((chars) && (chars[0])) {
             if (!(content_type_text_.value().compare(chars))) {
                 content_type_ = content_type_text();
             } else {
@@ -1172,14 +1185,19 @@ protected:
                         if (!(content_type_css_.value().compare(chars))) {
                             content_type_ = content_type_css();
                         } else {
-                            if (!(content_type_js_.value().compare(chars))) {
-                                content_type_ = content_type_js();
+                            if (!(content_type_text_js_.value().compare(chars))) {
+                                content_type_ = content_type_text_js();
                             } else {
-                                if (!(content_type_json_.value().compare(chars))) {
-                                    content_type_ = content_type_json();
+                                if (!(content_type_text_json_.value().compare(chars))) {
+                                    content_type_ = content_type_text_json();
                                 } else {
-                                    if ((content_type_ = content_type_other())) {
-                                        content_type_->set_value(chars);
+                                    if (!(content_type_application_js_.value().compare(chars))) {
+                                        content_type_ = content_type_application_js();
+                                    } else {
+                                        if (!(content_type_application_json_.value().compare(chars))) {
+                                            content_type_ = content_type_application_json();
+                                        } else {
+                                        }
                                     }
                                 }
                             }
@@ -1216,6 +1234,22 @@ protected:
         set_content_type(content_type_json());
         return content_type_;
     }
+    virtual content_type_header_t* set_content_type_text_js() {
+        set_content_type(content_type_text_js());
+        return content_type_;
+    }
+    virtual content_type_header_t* set_content_type_text_json() {
+        set_content_type(content_type_text_json());
+        return content_type_;
+    }
+    virtual content_type_header_t* set_content_type_application_js() {
+        set_content_type(content_type_application_js());
+        return content_type_;
+    }
+    virtual content_type_header_t* set_content_type_application_json() {
+        set_content_type(content_type_application_json());
+        return content_type_;
+    }
 
     /// content_type_is...
     virtual content_type_header_t* content_type_is_text() const {
@@ -1235,6 +1269,18 @@ protected:
     }
     virtual content_type_header_t* content_type_is_json() const {
         return content_type_is(content_type_json());
+    }
+    virtual content_type_header_t* content_type_is_text_js() const {
+        return content_type_is(content_type_text_js());
+    }
+    virtual content_type_header_t* content_type_is_text_json() const {
+        return content_type_is(content_type_text_json());
+    }
+    virtual content_type_header_t* content_type_is_application_js() const {
+        return content_type_is(content_type_application_js());
+    }
+    virtual content_type_header_t* content_type_is_application_json() const {
+        return content_type_is(content_type_application_json());
     }
     virtual content_type_header_t* content_type_is(content_type_header_t* content_type) const {
         if ((content_type_) && (content_type)) {
@@ -1286,14 +1332,42 @@ protected:
     virtual content_type_header_t* content_type_css() const {
         return (content_type_header_t*)&content_type_css_;
     }
+    content_type_header_t* (derives::*content_type_js_)() const;
     virtual content_type_header_t* content_type_js() const {
-        return (content_type_header_t*)&content_type_js_;
+        if ((content_type_js_)) {
+            return (this->*content_type_js_)();
+        }
+        return content_type_application_js();
     }
+    content_type_header_t* (derives::*content_type_json_)() const;
     virtual content_type_header_t* content_type_json() const {
-        return (content_type_header_t*)&content_type_json_;
+        if ((content_type_json_)) {
+            return (this->*content_type_json_)();
+        }
+        return content_type_application_json();
+    }
+    virtual content_type_header_t* content_type_text_js() const {
+        return (content_type_header_t*)&content_type_text_js_;
+    }
+    virtual content_type_header_t* content_type_text_json() const {
+        return (content_type_header_t*)&content_type_text_json_;
+    }
+    virtual content_type_header_t* content_type_application_js() const {
+        return (content_type_header_t*)&content_type_application_js_;
+    }
+    virtual content_type_header_t* content_type_application_json() const {
+        return (content_type_header_t*)&content_type_application_json_;
     }
     virtual content_type_header_t* content_type_other() const {
         return (content_type_header_t*)&content_type_other_;
+    }
+    virtual content_type_header_t* request_content_type() const {
+        content_type_header_t* content_type_header = 0;
+        const char_t *chars = 0;
+        if ((chars = environment_setting_CONTENT_TYPE()) && (chars[0])) {
+            content_type_header = get_content_type_of(chars);
+        }
+        return content_type_header;
     }
     
     /// ...configure_setting...
@@ -1319,6 +1393,14 @@ protected:
     }
 
     /// environment_setting...
+    virtual const char_t *environment_setting_CONTENT_TYPE() const {
+        const char_t *setting = environment_setting(CONTENT_TYPE);
+        return setting;
+    }
+    virtual const char_t *environment_setting_CONTENT_LENGTH() const {
+        const char_t *setting = environment_setting(CONTENT_LENGTH);
+        return setting;
+    }
     virtual const char_t *environment_setting_PATH_TRANSLATED() const {
         const char_t *setting = environment_setting(PATH_TRANSLATED);
         return setting;
@@ -1376,8 +1458,8 @@ protected:
 protected:
     content_type_header_t *out_content_type_, *content_type_,
                           content_type_text_, content_type_html_, content_type_xml_,
-                          content_type_css_, content_type_js_, content_type_json_,
-                          content_type_other_;
+                          content_type_css_, content_type_text_js_, content_type_text_json_,
+                          content_type_application_js_, content_type_application_json_, content_type_other_;
 
     string_t content_type_parameter_name_,
              configure_name_, configure_file_name_, configure_file_pattern_,
